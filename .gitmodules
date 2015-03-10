@@ -1,0 +1,3 @@
+[submodule "SearchAlgorithms"]
+	path = SearchAlgorithms
+	url = git@github.com:DavidUser/SearchAlgorithms.git
