@@ -1,16 +1,15 @@
 % component =  [ xPosition yPosition width height ]
-limits = [0 0 3.5 3];
-sofa = [0 2.45 1.76 .55];
-cabinet = [0 .74 .28 1.12];
-southDoor = [0 -.1 .83 .1];
-northDoor = [2.66 3 .84 .1];
-equipment = [3.15 .16 .35 .69];
-serum = [3.15 2.07 .35 .18];
-bed = [1.6 1.08 1.89 .81];
+limits = 	[0 0 3.5 3]*100;
+sofa = 		[0 2.45 1.76 .55]*100;
+cabinet = 	[0 .74 .28 1.12]*100;
+southDoor = 	[0 -.1 .83 .1]*100;
+northDoor = 	[2.66 3 .84 .1]*100;
+equipment = 	[3.15 .16 .35 .69]*100;
+serum = 	[3.15 2.07 .35 .18]*100;
+bed = 		[1.6 1.08 1.89 .81]*100;
 
-scenario1 = figure();
 hold on;
-axis([-1 4.5 -1 4]); % TODO max position x, y increased by 1
+axis([-1 4.5 -1 4] * 100); % TODO max position x, y increased by 1
 
 rectangle('Position', limits, 'EdgeColor', 'red');
 rectangle('Position', sofa);
