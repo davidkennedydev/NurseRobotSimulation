@@ -1,15 +1,16 @@
 addpath('../SearchAlgorithms/graphSearch/drawGraph');
 scale = 100;
 S = [
-	.39	0
-	1.42	.54
-	.38	1.29
-	3.2	.53
-	1.04	2.34
-	1.43	2.05
-	3.2	2.07
 	3.08	3
+	3.2	2.07
+	1.43	2.05
+	1.04	2.34
+	.38	1.29
+	1.42	.54
+	.39	0
+	3.2	.53
 ]*scale;
+G(1,2) = .8365;
 G(1,2) = .8365;
 G(1,3) = 1.8992;
 G(1,5) = 3.2012;
@@ -47,7 +48,7 @@ G(8,5) = G(5,8);
 G(8,6) = G(6,8);
 G(8,7) = G(7,8);
 
-drawGraph(S,G);
+drawGraph(S,G, 20);
 
 % draw hospital apartment
 addpath('../scenarios');
