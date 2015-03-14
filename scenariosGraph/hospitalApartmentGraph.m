@@ -1,4 +1,3 @@
-addpath('../SearchAlgorithms/graphSearch/drawGraph');
 scale = 100;
 S = [
 	3.08	3
@@ -48,10 +47,23 @@ G(8,5) = G(5,8);
 G(8,6) = G(6,8);
 G(8,7) = G(7,8);
 
+% graph draw library inclusion
+addpath('../SearchAlgorithms/graphSearch/drawGraph');
 drawGraph(S,G, 20);
 
 % draw hospital apartment
 addpath('../scenarios');
 hospitalApartment; 
 
-% graph draw library inclusion
+OBJECTIVES_POSITION = [ S(2,:); S(3,:); S(5,:); S(8,:) ];
+OBJECTIVES_PRIORITY = [ .50 .10 .15 .25 ];
+
+% fuction to reapeat each row
+reprow = @(MATRIX, rep) reshape(repmat(eye(size(MATRIX, 1)), rep, 1), size(MATRIX, 1), size(MATRIX, 1) * rep)' * MATRIX;
+
+% function to calulcate distance
+distance = @(START, END) sqrt(sum((START - END).^2, 2));
+% function to calculate distace from matrix, on result each column are distances of the START row to each row END
+distanceMat = @(START, END) reshape(distance(reprow(START,size(END,1)), repmat(END,size(START,1),1)), size(END,1), size(START, 1));
+
+HEURISTIC = OBJECTIVES_PRIORITY * distanceMat(S, OBJECTIVES_POSITION);
