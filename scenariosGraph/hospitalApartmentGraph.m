@@ -1,4 +1,7 @@
+#! /usr/bin/octave -q
+
 scale = 100;
+nodesSize = 20;
 S = [
 	3.08	3
 	3.2	2.07
@@ -49,14 +52,17 @@ G(8,7) = G(7,8);
 
 % graph draw library inclusion
 addpath('../SearchAlgorithms/graphSearch/drawGraph');
-drawGraph(S,G, 20);
+drawGraph(S,G, nodesSize);
 
 % draw hospital apartment
 addpath('../scenarios');
 hospitalApartment; 
 
-OBJECTIVES_POSITION = [ S(2,:); S(3,:); S(5,:); S(8,:) ];
-OBJECTIVES_PRIORITY = [ .50 .10 .15 .25 ];
+pause();
+
+GOALS = [2 3 5 8];
+OBJECTIVES_POSITION = S(GOALS,:); 
+OBJECTIVES_PRIORITY = [ .50 .10 .15 .25 ]; % TODO analise signals to take this values
 
 % fuction to reapeat each row
 reprow = @(MATRIX, rep) reshape(repmat(eye(size(MATRIX, 1)), rep, 1), size(MATRIX, 1), size(MATRIX, 1) * rep)' * MATRIX;
@@ -67,3 +73,33 @@ distance = @(START, END) sqrt(sum((START - END).^2, 2));
 distanceMat = @(START, END) reshape(distance(reprow(START,size(END,1)), repmat(END,size(START,1),1)), size(END,1), size(START, 1));
 
 HEURISTIC = OBJECTIVES_PRIORITY * distanceMat(S, OBJECTIVES_POSITION);
+
+addpath('../SearchAlgorithms/graphSearch/AStar');
+[ways costs] = search(G, HEURISTIC, 1, GOALS);
+
+ways = ways(find(costs(costs < 4)), :); % limit ways founded by cost less than
+
+% show ways founded formated, by text line and graphical
+for i=1:size(ways)(1)
+	% console result
+	way = ways(i,:);
+	way = way(find(way)); %remove zeros
+	way = way(sort(nthargout(2, @unique, way, 'first'))); %remove repetitions
+	fprintf('cost: %d, way: ', costs(i));
+	display(way);
+	
+	% graphical plot
+	wayGraph = zeros(size(G));
+	for j = 2:numel(way)
+		wayGraph(way(j-1), way(j)) = G(way(j-1), way(j));
+	end
+	drawGraph(S, wayGraph, nodesSize);
+	hospitalApartment; 
+	title(['way ',int2str(i), ' , cost: ', int2str(costs(i))]);
+	pause(.5);
+end
+
+GOALS
+HEURISTIC
+
+pause();
