@@ -52,6 +52,7 @@ G(8,7) = G(7,8);
 
 % graph draw library inclusion
 addpath('../SearchAlgorithms/graphSearch/drawGraph');
+drawBackgroundGraph(700,700);
 drawGraph(S,G, nodesSize);
 
 % draw hospital apartment
@@ -93,6 +94,7 @@ for i=1:size(ways)(1)
 	for j = 2:numel(way)
 		wayGraph(way(j-1), way(j)) = G(way(j-1), way(j));
 	end
+	drawBackgroundGraph(700,700);
 	drawGraph(S, wayGraph, nodesSize);
 	hospitalApartment; 
 	title(['way ',int2str(i), ' , cost: ', int2str(costs(i))]);

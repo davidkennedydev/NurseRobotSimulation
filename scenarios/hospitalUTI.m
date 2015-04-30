@@ -29,8 +29,6 @@ equipment5  = [equipment(1) + scale * 2.4 * 4, equipment(2:4)];
 bed5  = [bed(1) + scale * 2.4 * 4, bed(2:4)];
 serum5  = [serum(1) + scale * 2.4 * 4, serum(2:4)];
 
-figure('Position', limits);
-hold on;
 axis([-1 * scale, limits(3) + 1*scale, -1*scale, limits(4) + 1*scale]); 
 
 rectangle('Position', limits, 'EdgeColor', 'red'); 
