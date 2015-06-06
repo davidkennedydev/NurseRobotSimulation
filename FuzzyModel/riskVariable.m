@@ -20,7 +20,7 @@ yellowRiskCurve = buildCurve(yellowRisk, riskDomain, curvePrecision);
 redRiskCurve = buildCurve(redRisk, riskDomain, curvePrecision);
 veryRedRiskCurve = very(redRiskCurve);
 
-%plot arousal graph representation
+%plot graph representation
 figure;
 hold all;
 plot(xRisk, blueRiskCurve, 'Color', [0,0,1]);
@@ -29,3 +29,4 @@ plot(xRisk, greenRiskCurve, 'Color', [0,1,0]);
 plot(xRisk, yellowRiskCurve, 'Color', [.8,.8,0]);
 plot(xRisk, redRiskCurve, 'Color', [1,0,0]);
 plot(xRisk, veryRedRiskCurve, 'Color', [.5,0,0]);
+pause();
