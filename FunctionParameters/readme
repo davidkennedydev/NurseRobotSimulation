@@ -1,3 +1,9 @@
 Best parameters to a triangular function
 
-using a multi layer perceptron feed-forward backpropagation with sigmoid activation function.
+* using a multi layer perceptron feed-forward backpropagation with sigmoid activation function.
+	- doesn't work, do you need of the differentiation of the activation function
+
+* using Kohonen Map with the algorithm winner-take all, to discover function format using pré-discovered data
+	- doesn't work to this prupose, create good clusters, but don't discover the function shape
+
+* using interpolation algorithms
