@@ -74,15 +74,16 @@ drawGraph(POSITIONS,CONECTIONS, nodesSize);
 
 pause();
 
-%GOALS = [6 9 15 27];
+GOALS = [];
+GOAL_PRIORITY = [];
 do
-	goal = input('goal number or 0 to quit: ');
+	goal = input('');
 	if (goal > 0)
 		GOALS(end+1) = goal;
+		GOAL_PRIORITY(end+1) = input('');
 	end
 until (goal == 0)
 GOAL_POSITION = POSITIONS(GOALS,:); 
-GOAL_PRIORITY = ones(1, numel(GOALS)); % TODO analise signals to take this values
 
 % fuction to reapeat each row
 reprow = @(MATRIX, rep) reshape(repmat(eye(size(MATRIX, 1)), rep, 1), size(MATRIX, 1), size(MATRIX, 1) * rep)' * MATRIX;
@@ -92,12 +93,12 @@ distanceMat = @(START, END) reshape(distance(reprow(START,size(END,1)), repmat(E
 
 HEURISTIC = GOAL_PRIORITY * distanceMat(POSITIONS, GOAL_POSITION);
 
-startPosition = input('first position: ');
+startPosition = input('');
 addpath('../SearchAlgorithms/graphSearch/AStar');
-[ways costs] = search(CONECTIONS, HEURISTIC, startPosition, GOALS, 1);
+[ways costs] = search(CONECTIONS, HEURISTIC, startPosition, GOALS, 0.1);
 
-limit = input('cost limit: ');
-ways = ways(find(costs(costs < limit)), :); % limit ways founded by cost less than
+%limit = input('cost limit: ');
+%ways = ways(find(costs(costs < limit)), :); % limit ways founded by cost less than
 
 % show ways founded formated, by text line and graphical
 for i=1:size(ways)(1)
@@ -105,26 +106,26 @@ for i=1:size(ways)(1)
 	way = ways(i,:);
 	way = way(find(way)); %remove zeros
 	way = way(sort(nthargout(2, @unique, way, 'first'))); %remove repetitions
-	fprintf('cost: %d, way: ', costs(i));
-	display(way);
+	fprintf('%d & ', costs(i));
+	for j = 1:numel(way)
+		fprintf('%d ', way(j));
+	end
+	fprintf('\\\\\n');
 	
 	% graphical plot
-	wayGraph = zeros(size(CONECTIONS));
-	for j = 2:numel(way)
-		wayGraph(way(j-1), way(j)) = CONECTIONS(way(j-1), way(j));
-	end
+	%wayGraph = zeros(size(CONECTIONS));
+	%for j = 2:numel(way)
+	%	wayGraph(way(j-1), way(j)) = CONECTIONS(way(j-1), way(j));
+	%end
 
-	drawBackgroundGraph(1200, 470);
-	% draw hospital UTI
-	addpath('../scenarios');
-	hospitalUTI; 
-	hold on;
-	drawGraph(POSITIONS, wayGraph, nodesSize);
-	title(['way ',int2str(i), ' , cost: ', int2str(costs(i))]);
-	pause(.5);
+	%drawBackgroundGraph(1200, 470);
+	%% draw hospital UTI
+	%addpath('../scenarios');
+	%hospitalUTI; 
+	%hold on;
+	%drawGraph(POSITIONS, wayGraph, nodesSize);
+	%title(['way ',int2str(i), ' , cost: ', int2str(costs(i))]);
+	%pause(.5);
 end
-
-GOALS
-HEURISTIC
 
 pause();
