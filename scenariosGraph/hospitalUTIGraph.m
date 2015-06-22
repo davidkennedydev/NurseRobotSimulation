@@ -74,15 +74,15 @@ drawGraph(POSITIONS,CONECTIONS, nodesSize);
 
 pause();
 
-%GOALS = [6 9 15 27];
+GOAL_PRIORITY = []; % TODO analise signals to take this values
 do
 	goal = input('goal number or 0 to quit: ');
 	if (goal > 0)
 		GOALS(end+1) = goal;
+		GOAL_PRIORITY(end+1) = input('goal priority: ');
 	end
 until (goal == 0)
 GOAL_POSITION = POSITIONS(GOALS,:); 
-GOAL_PRIORITY = ones(1, numel(GOALS)); % TODO analise signals to take this values
 
 % fuction to reapeat each row
 reprow = @(MATRIX, rep) reshape(repmat(eye(size(MATRIX, 1)), rep, 1), size(MATRIX, 1), size(MATRIX, 1) * rep)' * MATRIX;
@@ -96,8 +96,8 @@ startPosition = input('first position: ');
 addpath('../SearchAlgorithms/graphSearch/AStar');
 [ways costs] = search(CONECTIONS, HEURISTIC, startPosition, GOALS, 1);
 
-limit = input('cost limit: ');
-ways = ways(find(costs(costs < limit)), :); % limit ways founded by cost less than
+limit = input('limit ammount of ways: ');
+ways = ways(1:limit, :); % limit ammount of ways to show
 
 % show ways founded formated, by text line and graphical
 for i=1:size(ways)(1)
@@ -121,7 +121,7 @@ for i=1:size(ways)(1)
 	hold on;
 	drawGraph(POSITIONS, wayGraph, nodesSize);
 	title(['way ',int2str(i), ' , cost: ', int2str(costs(i))]);
-	pause(.5);
+	pause();
 end
 
 GOALS
